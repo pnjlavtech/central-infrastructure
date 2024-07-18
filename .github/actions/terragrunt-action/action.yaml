@@ -26,7 +26,7 @@ runs:
 
     - name: Create Terraform Plugin Cache Dir
       run: | 
-        mkdir -p $tf_plugin_cache_dir
+        mkdir -p ${{ env.tf_plugin_cache_dir }} 
       shell: bash
 
     - name: Terraform Plugin Cache
