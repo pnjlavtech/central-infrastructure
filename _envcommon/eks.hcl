@@ -30,7 +30,7 @@ locals {
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. This will
   # be used to construct the source URL in the child terragrunt configurations.
-  base_source_url = "git::https://github.com/pnjlavtech/tf-aws-modules.git//modules/eks"
+  base_source_url = "git::https://github.com/pnjlavtech/tf-aws-modules.git//eks"
 }
 
 
