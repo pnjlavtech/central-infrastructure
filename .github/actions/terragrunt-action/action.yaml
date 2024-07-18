@@ -6,13 +6,28 @@ inputs:
   apply:
     description: "Whether the job should apply after plan"
     default: "false"
-  tf_plugin_cache_dir:
-    description: "tf_plugin_cache_dir"
-    default: "${{ github.workspace }}/.terraform.d/plugin-cache"
-    required: true
   environment_name:
     description: "Environment/AWS Account being targeted."
     default: "dev"
+    required: true
+  gh_pat:
+    description: "gh_pat"
+    required: true
+  tg_ver:
+    description: "tg ver"
+    default: "0.59.7"
+    required: true
+  tg_version:
+    description: "tg version"
+    default: 0.59.7
+    required: true
+  tf_version:
+    description: "tf version"
+    default: "1.8.3"
+    required: true
+  tf_plugin_cache_dir:
+    description: "tf_plugin_cache_dir"
+    default: "${{ github.workspace }}/.terraform.d/plugin-cache"
     required: true
   
 runs:
@@ -64,8 +79,10 @@ runs:
     # configure the Terragrunt CLI configuration file with a Terragrunt Cloud user API token
     - name: Setup Terraform 
       uses: hashicorp/setup-Terraform@v3
+      env:
+        TF_VERSION: ${{ env.tf_version }}
       with:
-        terraform_version: ${{ env.tf_version }}
+        # terraform_version: ${{ env.tf_version }}
         terraform_wrapper: true
 
     - name: Setup Terraform version
@@ -79,8 +96,9 @@ runs:
 
     - name: Setup Terragrunt
       uses: autero1/action-terragrunt@v3
+      env:
+        TG_VER: ${{ env.tg_ver }}
       with:
-        terragrunt-version: ${{ env.tg_ver }}
         token: ${{ env.gh_pat }}
       
     - name: Terragrunt Plan ${{ inputs.environment_name }}
