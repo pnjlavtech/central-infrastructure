@@ -13,17 +13,17 @@ locals {
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   # Extract out common variables for reuse
-  env = local.environment_vars.locals.environment
-
-  # Extract the variables we need for easy access
+  env        = local.environment_vars.locals.environment
   region     = local.region_vars.locals.region
   cidr       = local.environment_vars.locals.cidr
   eks_name   = local.environment_vars.locals.eks_name
+  eks_clus   = local.region_vars.locals.eks_clus
+  eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env-region = "${local.env}-${local.region}"
   vpc_cidr   = local.cidr
 
   tags = {
-    Clustername = "${local.eks_name}"
+    Clustername = "${local.eks_fname}"
     // GithubRepo  = "central-infrastructure"
     // GithubOrg   = "pnjlavtech"
   }

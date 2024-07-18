@@ -15,7 +15,9 @@ locals {
   # Extract the variables we need for easy access
   region     = local.region_vars.locals.region
   cidr       = local.environment_vars.locals.cidr
+  eks_clus   = local.region_vars.locals.eks_clus
   eks_name   = local.environment_vars.locals.eks_name
+  eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env        = local.environment_vars.locals.environment
   env-region = "${local.env}-${local.region}"
   // gh_token   = get_env("GH_PAT")
@@ -74,16 +76,16 @@ inputs = {
     fullname                          = "${local.env}-vpc-subnet-private-${local.region}" 
     module-component                  = "subnet"
     module-component-type             = "subnet-private"
-    "karpenter.sh/discovery"          = local.name
+    "karpenter.sh/discovery"          = "${local.eks_fname}"
     "kubernetes.io/role/internal-elb" = 1
   }
   public_subnet_tags = {
-    env                                       = "${local.env}"
-    fullname                                  = "${local.env}-vpc-subnet-public-${local.region}" 
-    "kubernetes.io/cluster/${local.eks_name}" = "shared"
-    "kubernetes.io/role/elb"                  = 1
-    module-component                          = "subnet"
-    module-component-type                     = "subnet-public"
+    env                                        = "${local.env}"
+    fullname                                   = "${local.env}-vpc-subnet-public-${local.region}" 
+    "kubernetes.io/cluster/${local.eks_fname}" = "shared"
+    "kubernetes.io/role/elb"                   = 1
+    module-component                           = "subnet"
+    module-component-type                      = "subnet-public"
   }
 
 }
