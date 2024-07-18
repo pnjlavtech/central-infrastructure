@@ -6,6 +6,10 @@ inputs:
   apply:
     description: "Whether the job should apply after plan"
     default: "false"
+  tf_plugin_cache_dir:
+    description: "tf_plugin_cache_dir"
+    default: "${{ github.workspace }}/.terraform.d/plugin-cache"
+    required: true
   environment_name:
     description: "Environment/AWS Account being targeted."
     default: "dev"
@@ -13,7 +17,6 @@ inputs:
   
 runs:
   using: "composite" 
-
   steps:
     - name: Checkout repo
       uses: actions/checkout@main
@@ -25,14 +28,15 @@ runs:
     #     aws-region: us-west-2
 
     - name: Create Terraform Plugin Cache Dir
-      run: | 
-        mkdir -p ${{ env.tf_plugin_cache_dir }} 
+      run: mkdir -p $TF_PLUGIN_CACHE_DIR 
       shell: bash
+      env:
+        TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
 
     - name: Terraform Plugin Cache
       uses: actions/cache@v4.0.1
       with:
-        path: ${{ env.tf_plugin_cache_dir }}
+        path: ${{ inputs.tf_plugin_cache_dir }}
         key: ${{ runner.os }}-terraform-plugin-cache-${{ hashFiles('**/.terraform.lock.hcl') }}
 
     - name: Setup TFLint
@@ -41,13 +45,11 @@ runs:
         tflint_version: v0.50.3
 
     - name: Show version
-      run: |
-        tflint --version
+      run: tflint --version
       shell: bash
 
     - name: Init TFLint
-      run: |
-        tflint --init
+      run: tflint --init
       shell: bash
       env:
       #   # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
