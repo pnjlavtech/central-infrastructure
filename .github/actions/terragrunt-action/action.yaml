@@ -79,8 +79,8 @@ runs:
     # configure the Terragrunt CLI configuration file with a Terragrunt Cloud user API token
     - name: Setup Terraform 
       uses: hashicorp/setup-Terraform@v3
-      env:
-        TF_VERSION: ${{ env.tf_version }}
+      # env:
+      #   TF_VERSION: ${{ env.tf_version }}
       with:
         # terraform_version: ${{ env.tf_version }}
         terraform_wrapper: true
@@ -96,10 +96,16 @@ runs:
 
     - name: Setup Terragrunt
       uses: autero1/action-terragrunt@v3
-      env:
-        TG_VER: ${{ env.tg_ver }}
       with:
+        terragrunt-version: "0.59.7"
         token: ${{ env.gh_pat }}
+      
+    # - name: Setup Terragrunt
+    #   uses: autero1/action-terragrunt@v3
+    #   env:
+    #     TG_VER: ${{ env.tg_ver }}
+    #   with:
+    #     token: ${{ env.gh_pat }}
       
     - name: Terragrunt Plan ${{ inputs.environment_name }}
       run: |
