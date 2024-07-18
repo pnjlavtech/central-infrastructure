@@ -16,7 +16,7 @@ locals {
   env = local.environment_vars.locals.environment
 
   # Extract the variables we need for easy access
-  region = local.region_vars.locals.aws_region
+  region     = local.region_vars.locals.region
   cidr       = local.environment_vars.locals.cidr
   eks_name   = local.environment_vars.locals.eks_name
   env-region = "${local.env}-${local.region}"

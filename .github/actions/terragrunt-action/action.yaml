@@ -29,6 +29,10 @@ inputs:
     description: "tf_plugin_cache_dir"
     default: "${{ github.workspace }}/.terraform.d/plugin-cache"
     required: true
+  working_dir:
+    description: "working dir"
+    default: "./dev/us-west-2"
+    required: true
   
 runs:
   using: "composite" 
@@ -109,9 +113,12 @@ runs:
       
     - name: Terragrunt Plan ${{ inputs.environment_name }}
       run: |
-        cd ${{ inputs.environment_name }}
+        cd ${{ inputs.working_dir }}
         terragrunt run-all plan
       shell: bash
+      env:
+        WORKING_DIR: ${{ inputs.working_dir }}
+
 
     - name: Checkov GitHub Action
       uses: bridgecrewio/checkov-action@v12
@@ -121,8 +128,7 @@ runs:
         output_file_path: console,results.sarif
       
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v3
-      
+      uses: github/codeql-action/upload-sarif@v3     
       # Results are generated only on a success or failure
       # this is required since GitHub by default won't run the next step
       # when the previous one has failed. Security checks that do not pass will 'fail'.
@@ -136,9 +142,11 @@ runs:
     - name: Terragrunt Apply ${{ inputs.environment_name }}
       if: ${{ inputs.apply == true }}
       run: |
-        cd ${{ inputs.environment_name }}
+        cd ${{ inputs.inputs.working_dir }}
         terragrunt run-all apply
       shell: bash
+      env:
+        WORKING_DIR: ${{ inputs.working_dir }}
 
 
 
