@@ -11,7 +11,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   GH_PAT: ${{ secrets.GH_PAT }}
   TG_VERSION: 0.59.7
-  tg_version: '0.59.7'
   TF_VERSION: '1.8.5' 
   TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform.d/plugin-cache
   working_dir: './dev/us-west-2' 
