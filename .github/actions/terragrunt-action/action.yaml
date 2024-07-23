@@ -116,7 +116,7 @@ runs:
     #     ls -lart
     #   shell: bash
 
-    - name: Setup Terragrunt ${(TG_VER}}
+    - name: Setup Terragrunt ${( inputs.tg_ver }}
       run: |
         sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v$TG_VER/terragrunt_linux_amd64"
         sudo chmod +x /bin/terragrunt
