@@ -171,7 +171,8 @@ runs:
         TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
         TF_VERSION: ${{ inputs.tf_version }}
       with:
-        tf_version: ${{ env.tf_version }}
+        tf_version: ${{ inputs.tf_version }}
+        # tf_version: ${{ env.tf_version }}
         tg_version: ${{ env.tg_version }}
         tg_dir: ${{ env.working_dir }}
         tg_command: 'run-all plan --terragrunt-log-level debug'
