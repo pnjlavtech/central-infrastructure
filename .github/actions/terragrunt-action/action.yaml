@@ -107,15 +107,16 @@ runs:
         terragrunt-version: "0.59.7"
         token: ${{ env.gh_pat }}
 
+    - name: Checkout repo
+      uses: actions/checkout@main
+
     # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terragrunt Init
       run: |
-        cd ${{ inputs.working_dir }}
         terragrunt init --terragrunt-non-interactive
       shell: bash
       env:
         AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
-        WORKING_DIR: ${{ inputs.working_dir }}
 
     # - name: Setup Terragrunt
     #   uses: autero1/action-terragrunt@v3
