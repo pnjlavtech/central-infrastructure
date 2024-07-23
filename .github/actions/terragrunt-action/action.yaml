@@ -107,8 +107,14 @@ runs:
         terragrunt-version: "0.59.7"
         token: ${{ env.gh_pat }}
 
-    - name: Checkout repo
-      uses: actions/checkout@main
+    - name: Terragrunt Init
+      run: |
+        ls -lart
+        cd dev
+        ls -lart
+        cd us-west-2
+        ls -lart
+      shell: bash
 
     # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terragrunt Init
