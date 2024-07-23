@@ -3,6 +3,9 @@ name: "Tflint, Terragrunt Plan and Apply, Scan with Checkov"
 description: "Whether the job should apply after plan"
 
 inputs:
+  aws_account_id:
+    description: "aws account id"
+    required: true
   apply:
     description: "Whether the job should apply after plan"
     default: "false"
@@ -103,7 +106,14 @@ runs:
       with:
         terragrunt-version: "0.59.7"
         token: ${{ env.gh_pat }}
-      
+
+    # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terragrunt Init
+      run: terragrunt init --terragrunt-non-interactive
+      shell: bash
+      env:
+        AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
+
     # - name: Setup Terragrunt
     #   uses: autero1/action-terragrunt@v3
     #   env:
