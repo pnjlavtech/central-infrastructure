@@ -101,20 +101,33 @@ runs:
       shell: bash
 
 
-    - name: Setup Terragrunt
-      uses: autero1/action-terragrunt@v3
-      with:
-        terragrunt-version: "0.59.7"
-        token: ${{ env.gh_pat }}
+    # - name: Setup Terragrunt
+    #   uses: autero1/action-terragrunt@v3
+    #   with:
+    #     terragrunt-version: "0.59.7"
+    #     token: ${{ env.gh_pat }}
 
-    - name: Terragrunt Init
+    # - name: Terragrunt Init
+    #   run: |
+    #     ls -lart
+    #     cd dev
+    #     ls -lart
+    #     cd us-west-2
+    #     ls -lart
+    #   shell: bash
+
+    - name: Setup Terragrunt ${(TG_VER}}
       run: |
-        ls -lart
-        cd dev
-        ls -lart
-        cd us-west-2
-        ls -lart
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v$TG_VER/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v
       shell: bash
+      with:
+        token: ${{ env.gh_pat }}
+      env:
+        TG_VER: ${{ inputs.tg_ver }}
+
+
 
     # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terragrunt Init
@@ -123,6 +136,7 @@ runs:
       shell: bash
       env:
         AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
+
 
     # - name: Setup Terragrunt
     #   uses: autero1/action-terragrunt@v3
