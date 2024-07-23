@@ -122,8 +122,6 @@ runs:
         sudo chmod +x /bin/terragrunt
         terragrunt -v
       shell: bash
-      with:
-        token: ${{ env.gh_pat }}
       env:
         TG_VER: ${{ inputs.tg_ver }}
 
