@@ -116,24 +116,24 @@ runs:
     #     ls -lart
     #   shell: bash
 
-    - name: Setup Terragrunt ${( inputs.tg_ver }}
-      run: |
-        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v$TG_VER/terragrunt_linux_amd64"
-        sudo chmod +x /bin/terragrunt
-        terragrunt -v
-      shell: bash
-      env:
-        TG_VER: ${{ inputs.tg_ver }}
+    # - name: Setup Terragrunt ${( inputs.tg_ver }}
+    #   run: |
+    #     sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v$TG_VER/terragrunt_linux_amd64"
+    #     sudo chmod +x /bin/terragrunt
+    #     terragrunt -v
+    #   shell: bash
+    #   env:
+    #     TG_VER: ${{ inputs.tg_ver }}
 
 
 
     # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terragrunt Init
-      run: |
-        terragrunt init --terragrunt-non-interactive --terragrunt-log-level debug
-      shell: bash
-      env:
-        AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
+    # - name: Terragrunt Init
+    #   run: |
+    #     terragrunt init --terragrunt-non-interactive --terragrunt-log-level debug
+    #   shell: bash
+    #   env:
+    #     AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }}
 
 
     # - name: Setup Terragrunt
@@ -143,13 +143,39 @@ runs:
     #   with:
     #     token: ${{ env.gh_pat }}
       
+    # - name: Terragrunt Plan ${{ inputs.environment_name }}
+    #   run: |
+    #     cd ${{ inputs.working_dir }}
+    #     terragrunt run-all plan --terragrunt-log-level debug
+    #   shell: bash
+    #   env:
+    #     WORKING_DIR: ${{ inputs.working_dir }}
+
+
+    # - name: Terragrunt Plan ${{ inputs.environment_name }}
+    #   uses: gruntwork-io/terragrunt-action@v2
+    #   env:
+    #     AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
+    #     TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
+    #   with:
+    #     tf_version: ${{ env.tf_version }}
+    #     tg_version: ${{ env.tg_version }}
+    #     tg_dir: ${{ env.working_dir }}
+    #     tg_command: 'run-all plan --terragrunt-log-level debug'
+
+
     - name: Terragrunt Plan ${{ inputs.environment_name }}
-      run: |
-        cd ${{ inputs.working_dir }}
-        terragrunt run-all plan --terragrunt-log-level debug
-      shell: bash
+      uses: gruntwork-io/terragrunt-action@v2
       env:
-        WORKING_DIR: ${{ inputs.working_dir }}
+        AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
+        TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
+      with:
+        tf_version: ${{ env.tf_version }}
+        tg_version: ${{ env.tg_version }}
+        tg_dir: ${{ env.working_dir }}
+        tg_command: 'run-all plan --terragrunt-log-level debug'
+
+
 
 
     - name: Checkov GitHub Action
