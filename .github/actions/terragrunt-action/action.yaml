@@ -166,15 +166,14 @@ runs:
 
     - name: Terragrunt Plan ${{ inputs.environment_name }}
       uses: gruntwork-io/terragrunt-action@v2
-      env:
-        AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
-        TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
-        TF_VERSION: ${{ inputs.tf_version }}
+      # env:
+      #   AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
+      #   TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
+      #   TF_VERSION: ${{ inputs.tf_version }}
       with:
         tf_version: ${{ inputs.tf_version }}
-        # tf_version: ${{ env.tf_version }}
-        tg_version: ${{ env.tg_version }}
-        tg_dir: ${{ env.working_dir }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
         tg_command: 'run-all plan --terragrunt-log-level debug'
 
 
