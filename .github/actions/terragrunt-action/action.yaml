@@ -74,7 +74,7 @@ runs:
       run: tflint --init
       shell: bash
       env:
-      #   # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
         GITHUB_TOKEN: ${{ env.gh_pat }}
 
     - name: Run TFLint
@@ -83,11 +83,8 @@ runs:
 
 
     # Install the latest version of Terragrunt CLI and 
-    # configure the Terragrunt CLI configuration file with a Terragrunt Cloud user API token
     - name: Setup Terraform 
       uses: hashicorp/setup-Terraform@v3
-      # env:
-      #   TF_VERSION: ${{ env.tf_version }}
       with:
         # terraform_version: ${{ env.tf_version }}
         terraform_wrapper: true
@@ -99,6 +96,47 @@ runs:
     - name: Setup Terraform wrapper path
       run: which terraform
       shell: bash
+
+
+    - name: Terragrunt Plan ${{ inputs.environment_name }}
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ inputs.tf_version }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
+        tg_command: 'run-all plan --terragrunt-log-level debug'
+
+
+
+    - name: Checkov GitHub Action
+      uses: bridgecrewio/checkov-action@v12
+      with:
+        # This will add both a CLI output to the console and create a results.sarif file
+        output_format: cli,sarif
+        output_file_path: console,results.sarif
+      
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v3     
+      # Results are generated only on a success or failure
+      # this is required since GitHub by default won't run the next step
+      # when the previous one has failed. Security checks that do not pass will 'fail'.
+      # An alternative is to add `continue-on-error: true` to the previous step
+      # Or 'soft_fail: true' to checkov.
+      if: success() || failure()
+      with:
+        sarif_file: results.sarif
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     # - name: Setup Terragrunt
@@ -163,49 +201,18 @@ runs:
     #     tg_dir: ${{ env.working_dir }}
     #     tg_command: 'run-all plan --terragrunt-log-level debug'
 
-
-    - name: Terragrunt Plan ${{ inputs.environment_name }}
-      uses: gruntwork-io/terragrunt-action@v2
-      # env:
-      #   AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
-      #   TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
-      #   TF_VERSION: ${{ inputs.tf_version }}
-      with:
-        tf_version: ${{ inputs.tf_version }}
-        tg_version: ${{ inputs.tg_version }}
-        tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all plan --terragrunt-log-level debug'
+    # - name: Terragrunt Apply ${{ inputs.environment_name }}
+    #   if: ${{ inputs.apply == true }}
+    #   run: |
+    #     cd ${{ inputs.inputs.working_dir }}
+    #     terragrunt run-all apply
+    #   shell: bash
+    #   env:
+    #     WORKING_DIR: ${{ inputs.working_dir }}
 
 
 
 
-    - name: Checkov GitHub Action
-      uses: bridgecrewio/checkov-action@v12
-      with:
-        # This will add both a CLI output to the console and create a results.sarif file
-        output_format: cli,sarif
-        output_file_path: console,results.sarif
-      
-    - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v3     
-      # Results are generated only on a success or failure
-      # this is required since GitHub by default won't run the next step
-      # when the previous one has failed. Security checks that do not pass will 'fail'.
-      # An alternative is to add `continue-on-error: true` to the previous step
-      # Or 'soft_fail: true' to checkov.
-      if: success() || failure()
-      with:
-        sarif_file: results.sarif
-
-
-    - name: Terragrunt Apply ${{ inputs.environment_name }}
-      if: ${{ inputs.apply == true }}
-      run: |
-        cd ${{ inputs.inputs.working_dir }}
-        terragrunt run-all apply
-      shell: bash
-      env:
-        WORKING_DIR: ${{ inputs.working_dir }}
 
 
 
