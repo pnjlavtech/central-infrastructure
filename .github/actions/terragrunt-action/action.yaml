@@ -26,7 +26,7 @@ inputs:
     required: true
   tf_version:
     description: "tf version"
-    default: "1.8.3"
+    default: "1.9.2"
     required: true
   tf_plugin_cache_dir:
     description: "tf_plugin_cache_dir"
@@ -169,6 +169,7 @@ runs:
       env:
         AWS_ACCOUNT_ID: ${{ inputs.aws_account_id }} 
         TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
+        TF_VERSION: ${{ inputs.tf_version }}
       with:
         tf_version: ${{ env.tf_version }}
         tg_version: ${{ env.tg_version }}
