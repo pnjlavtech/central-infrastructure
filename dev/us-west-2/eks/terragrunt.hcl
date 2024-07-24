@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., qa -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.9--eks"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.10--eks"
 }
 
 dependency "vpc" {
