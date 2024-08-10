@@ -6,8 +6,8 @@ inputs:
   aws_account_id:
     description: "aws account id"
     required: true
-  apply:
-    description: "Whether the job should apply after plan"
+  # apply:
+  #   description: "Whether the job should apply after plan"
     # default: "false"
   environment_name:
     description: "Environment/AWS Account being targeted."
@@ -127,16 +127,13 @@ runs:
     #     sarif_file: results.sarif
 
     - name: Terragrunt Apply ${{ inputs.environment_name }}
-      if: ${{ inputs.apply == true }}
+      # if: ${{ inputs.apply == true }}
       uses: gruntwork-io/terragrunt-action@v2
       with:
         tf_version: ${{ inputs.tf_version }}
         tg_version: ${{ inputs.tg_version }}
         tg_dir: ${{ inputs.working_dir }}
         tg_command: 'run-all apply --terragrunt-log-level debug'
-
-
-
 
 
 
