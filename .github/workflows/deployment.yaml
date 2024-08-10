@@ -51,4 +51,4 @@ jobs:
             tg_version: ${{ env.TG_VERSION }}
             tg_ver: ${{ env.TG_VER }}
             environment_name: "dev"          
-            apply: "true"
+            apply: true
