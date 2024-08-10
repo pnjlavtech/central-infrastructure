@@ -8,7 +8,7 @@ inputs:
     required: true
   apply:
     description: "Whether the job should apply after plan"
-    default: "false"
+    # default: "false"
   environment_name:
     description: "Environment/AWS Account being targeted."
     default: "dev"
