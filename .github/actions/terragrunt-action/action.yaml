@@ -1,14 +1,14 @@
 #.github/actions/terragrunt-action/action.yml
-name: "Tflint, Terragrunt Plan and Apply, Scan with Checkov"
-description: "Whether the job should apply after plan"
+name: "tf_lint__tg_plan__checkov_scan"
+description: "Tflint, Terragrunt Plan, and Scan with Checkov"
 
 inputs:
   aws_account_id:
     description: "aws account id"
     required: true
-  apply:
-    description: "Whether the job should apply after plan"
-    default: "false"
+  # apply:
+  #   description: "Whether the job should apply after plan"
+    # default: "false"
   environment_name:
     description: "Environment/AWS Account being targeted."
     default: "dev"
@@ -97,6 +97,15 @@ runs:
       run: which terraform
       shell: bash
 
+    # - name: Terragrunt Destroy ${{ inputs.environment_name }}
+    #   uses: gruntwork-io/terragrunt-action@v2
+    #   with:
+    #     tf_version: ${{ inputs.tf_version }}
+    #     tg_version: ${{ inputs.tg_version }}
+    #     tg_dir: ${{ inputs.working_dir }}
+    #     tg_command: 'run-all destroy --terragrunt-log-level debug'
+
+
 
     - name: Terragrunt Plan ${{ inputs.environment_name }}
       uses: gruntwork-io/terragrunt-action@v2
@@ -115,20 +124,25 @@ runs:
         output_format: cli,sarif
         output_file_path: console,results.sarif
       
-    # - name: Upload SARIF file
-    #   uses: github/codeql-action/upload-sarif@v3     
-    #   # Results are generated only on a success or failure
-    #   # this is required since GitHub by default won't run the next step
-    #   # when the previous one has failed. Security checks that do not pass will 'fail'.
-    #   # An alternative is to add `continue-on-error: true` to the previous step
-    #   # Or 'soft_fail: true' to checkov.
-    #   if: success() || failure()
+    # # - name: Upload SARIF file
+    # #   uses: github/codeql-action/upload-sarif@v3     
+    # #   # Results are generated only on a success or failure
+    # #   # this is required since GitHub by default won't run the next step
+    # #   # when the previous one has failed. Security checks that do not pass will 'fail'.
+    # #   # An alternative is to add `continue-on-error: true` to the previous step
+    # #   # Or 'soft_fail: true' to checkov.
+    # #   if: success() || failure()
+    # #   with:
+    # #     sarif_file: results.sarif
+
+    # - name: Terragrunt Apply ${{ inputs.environment_name }}
+    #   if: ${{ inputs.apply == true }}
+    #   uses: gruntwork-io/terragrunt-action@v2
     #   with:
-    #     sarif_file: results.sarif
-
-
-
-
+    #     tf_version: ${{ inputs.tf_version }}
+    #     tg_version: ${{ inputs.tg_version }}
+    #     tg_dir: ${{ inputs.working_dir }}
+    #     tg_command: 'run-all apply --terragrunt-log-level debug'
 
 
 

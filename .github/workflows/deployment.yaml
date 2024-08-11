@@ -44,11 +44,9 @@ jobs:
         - name: Checkout repo
           uses: actions/checkout@master
         - name: Terragrunt Apply Dev
-          uses: ./.github/actions/terragrunt-action
+          uses: gruntwork-io/terragrunt-action@v2
           with:
-            tf_plugin_cache_dir: ${{ env.TF_PLUGIN_CACHE_DIR }} 
             tf_version: ${{ env.TF_VERSION }}
             tg_version: ${{ env.TG_VERSION }}
-            tg_ver: ${{ env.TG_VER }}
-            environment_name: "dev"          
-            apply: true
+            tg_dir: ${{ env.working_dir }}
+            tg_command: 'run-all apply --terragrunt-log-level debug'
