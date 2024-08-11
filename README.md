@@ -33,6 +33,22 @@ It performs Software Composition Analysis (SCA) scanning which is a scan of open
 [checkov action](https://github.com/marketplace/actions/checkov-github-action)
 
 
+## GH Actions
+CICD is using:
+
+* Composite action
+   * action.yaml
+NOTE: GH Composite actions using other actions complicates things.
+
+Cant use if 
+
+if you want to use if then you have to use run 
+ 
+
+* Workflow calling composite actions
+
+
+
 
 
 

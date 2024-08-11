@@ -35,20 +35,18 @@ jobs:
             tg_ver: ${{ env.TG_VER }}
             environment_name: "dev"
             
-  # tg_apply_dev:
-  #     name: 'Terragrunt Apply Dev'
-  #     runs-on: ubuntu-latest
-  #     needs: tg_plan_dev
-  #     if: github.ref == 'refs/heads/develop'
-  #     steps:
-  #       - name: Checkout repo
-  #         uses: actions/checkout@master
-  #       - name: Terragrunt Apply Dev
-  #         uses: ./.github/actions/terragrunt-action
-  #         with:
-  #           tf_plugin_cache_dir: ${{ env.TF_PLUGIN_CACHE_DIR }} 
-  #           tf_version: ${{ env.TF_VERSION }}
-  #           tg_version: ${{ env.TG_VERSION }}
-  #           tg_ver: ${{ env.TG_VER }}
-  #           environment_name: "dev"          
-  #           # apply: true
+  tg_apply_dev:
+      name: 'Terragrunt Apply Dev'
+      runs-on: ubuntu-latest
+      needs: tg_plan_dev
+      if: github.ref == 'refs/heads/develop'
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@master
+        - name: Terragrunt Apply Dev
+          uses: gruntwork-io/terragrunt-action@v2
+          with:
+            tf_version: ${{ env.TF_VERSION }}
+            tg_version: ${{ env.TG_VERSION }}
+            tg_dir: ${{ env.working_dir }}
+            tg_command: 'run-all apply --terragrunt-log-level debug'
