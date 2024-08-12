@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., qa -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.7--karpenter"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.8--karpenter"
 }
 
 dependency "eks" {
@@ -43,4 +43,3 @@ inputs = {
   cluster_name                       = dependency.eks.outputs.cluster_name
   chart_version                      = "0.37.0"
 }
-
