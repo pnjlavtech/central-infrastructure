@@ -135,14 +135,14 @@ runs:
     # #   with:
     # #     sarif_file: results.sarif
 
-    - name: Terragrunt Apply ${{ inputs.environment_name }}
-      if: ${{ inputs.apply == true }}
-      uses: gruntwork-io/terragrunt-action@v2
-      with:
-        tf_version: ${{ inputs.tf_version }}
-        tg_version: ${{ inputs.tg_version }}
-        tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all apply --terragrunt-log-level debug'
+    # - name: Terragrunt Apply ${{ inputs.environment_name }}
+    #   if: ${{ inputs.apply == true }}
+    #   uses: gruntwork-io/terragrunt-action@v2
+    #   with:
+    #     tf_version: ${{ inputs.tf_version }}
+    #     tg_version: ${{ inputs.tg_version }}
+    #     tg_dir: ${{ inputs.working_dir }}
+    #     tg_command: 'run-all apply --terragrunt-log-level debug'
 
 
 
