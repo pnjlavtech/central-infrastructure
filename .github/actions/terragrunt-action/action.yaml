@@ -103,7 +103,7 @@ runs:
     #     tf_version: ${{ inputs.tf_version }}
     #     tg_version: ${{ inputs.tg_version }}
     #     tg_dir: ${{ inputs.working_dir }}
-    #     tg_command: 'run-all destroy --terragrunt-log-level debug'
+    #     tg_command: 'run-all destroy'
 
 
 
@@ -113,7 +113,8 @@ runs:
         tf_version: ${{ inputs.tf_version }}
         tg_version: ${{ inputs.tg_version }}
         tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all plan --terragrunt-log-level debug'
+        # tg_command: 'run-all plan --terragrunt-log-level debug'
+        tg_command: 'run-all plan'
 
 
 
