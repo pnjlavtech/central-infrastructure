@@ -61,25 +61,25 @@ runs:
         path: ${{ inputs.tf_plugin_cache_dir }}
         key: ${{ runner.os }}-terraform-plugin-cache-${{ hashFiles('**/.terraform.lock.hcl') }}
 
-    - name: Setup TFLint
-      uses: terraform-linters/setup-tflint@v4
-      with:
-        tflint_version: v0.50.3
+    # - name: Setup TFLint
+    #   uses: terraform-linters/setup-tflint@v4
+    #   with:
+    #     tflint_version: v0.50.3
 
-    - name: Show version
-      run: tflint --version
-      shell: bash
+    # - name: Show version
+    #   run: tflint --version
+    #   shell: bash
 
-    - name: Init TFLint
-      run: tflint --init
-      shell: bash
-      env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ env.gh_pat }}
+    # - name: Init TFLint
+    #   run: tflint --init
+    #   shell: bash
+    #   env:
+    #     # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+    #     GITHUB_TOKEN: ${{ env.gh_pat }}
 
-    - name: Run TFLint
-      run: tflint -f json 
-      shell: bash
+    # - name: Run TFLint
+    #   run: tflint -f json 
+    #   shell: bash
 
 
     # Install the latest version of Terragrunt CLI and 
@@ -97,13 +97,13 @@ runs:
       run: which terraform
       shell: bash
 
-    # - name: Terragrunt Destroy ${{ inputs.environment_name }}
-    #   uses: gruntwork-io/terragrunt-action@v2
-    #   with:
-    #     tf_version: ${{ inputs.tf_version }}
-    #     tg_version: ${{ inputs.tg_version }}
-    #     tg_dir: ${{ inputs.working_dir }}
-    #     tg_command: 'run-all destroy'
+    - name: Terragrunt Destroy ${{ inputs.environment_name }}
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ inputs.tf_version }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
+        tg_command: 'run-all destroy'
 
 
 
@@ -136,14 +136,14 @@ runs:
     # #   with:
     # #     sarif_file: results.sarif
 
-    - name: Terragrunt Apply ${{ inputs.environment_name }}
-      # if: ${{ inputs.apply == true }}
-      uses: gruntwork-io/terragrunt-action@v2
-      with:
-        tf_version: ${{ inputs.tf_version }}
-        tg_version: ${{ inputs.tg_version }}
-        tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all apply'
+    # - name: Terragrunt Apply ${{ inputs.environment_name }}
+    #   # if: ${{ inputs.apply == true }}
+    #   uses: gruntwork-io/terragrunt-action@v2
+    #   with:
+    #     tf_version: ${{ inputs.tf_version }}
+    #     tg_version: ${{ inputs.tg_version }}
+    #     tg_dir: ${{ inputs.working_dir }}
+    #     tg_command: 'run-all apply'
 
 
 
