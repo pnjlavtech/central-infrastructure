@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., qa -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.2--eks-iam"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.4--eks-iam"
 }
 
 dependency "eks" {
@@ -37,5 +37,5 @@ dependency "eks" {
 inputs = {
   cluster_name  = dependency.eks.outputs.cluster_name
   oidc_provider = dependency.eks.outputs.oidc_provider
-  public_domain = include.envcommon.locals.public_domain
+  // public_domain = include.envcommon.locals.public_domain
 }
