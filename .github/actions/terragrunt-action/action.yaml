@@ -89,41 +89,41 @@ runs:
         # terraform_version: ${{ env.tf_version }}
         terraform_wrapper: true
 
-    - name: Setup Terraform version
-      run: terraform --version
-      shell: bash
+    # - name: Setup Terraform version
+    #   run: terraform --version
+    #   shell: bash
 
-    - name: Setup Terraform wrapper path
-      run: which terraform
-      shell: bash
+    # - name: Setup Terraform wrapper path
+    #   run: which terraform
+    #   shell: bash
 
-    - name: Terragrunt Destroy ${{ inputs.environment_name }}
-      uses: gruntwork-io/terragrunt-action@v2
-      with:
-        tf_version: ${{ inputs.tf_version }}
-        tg_version: ${{ inputs.tg_version }}
-        tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all destroy'
-
-
-
-    # - name: Terragrunt Plan ${{ inputs.environment_name }}
+    # - name: Terragrunt Destroy ${{ inputs.environment_name }}
     #   uses: gruntwork-io/terragrunt-action@v2
     #   with:
     #     tf_version: ${{ inputs.tf_version }}
     #     tg_version: ${{ inputs.tg_version }}
     #     tg_dir: ${{ inputs.working_dir }}
-    #     # tg_command: 'run-all plan --terragrunt-log-level debug'
-    #     tg_command: 'run-all plan'
+    #     tg_command: 'run-all destroy'
 
 
 
-    # - name: Checkov GitHub Action
-    #   uses: bridgecrewio/checkov-action@v12
-    #   with:
-    #     # This will add both a CLI output to the console and create a results.sarif file
-    #     output_format: cli,sarif
-    #     output_file_path: console,results.sarif
+    - name: Terragrunt Plan ${{ inputs.environment_name }}
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ inputs.tf_version }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
+        # tg_command: 'run-all plan --terragrunt-log-level debug'
+        tg_command: 'run-all plan'
+
+
+
+    - name: Checkov GitHub Action
+      uses: bridgecrewio/checkov-action@v12
+      with:
+        # This will add both a CLI output to the console and create a results.sarif file
+        output_format: cli,sarif
+        output_file_path: console,results.sarif
       
     # # - name: Upload SARIF file
     # #   uses: github/codeql-action/upload-sarif@v3     
@@ -136,14 +136,14 @@ runs:
     # #   with:
     # #     sarif_file: results.sarif
 
-    # - name: Terragrunt Apply ${{ inputs.environment_name }}
-    #   # if: ${{ inputs.apply == true }}
-    #   uses: gruntwork-io/terragrunt-action@v2
-    #   with:
-    #     tf_version: ${{ inputs.tf_version }}
-    #     tg_version: ${{ inputs.tg_version }}
-    #     tg_dir: ${{ inputs.working_dir }}
-    #     tg_command: 'run-all apply'
+    - name: Terragrunt Apply ${{ inputs.environment_name }}
+      # if: ${{ inputs.apply == true }}
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ inputs.tf_version }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
+        tg_command: 'run-all apply'
 
 
 
