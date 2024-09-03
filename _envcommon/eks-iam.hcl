@@ -20,7 +20,6 @@ locals {
   eks_clus   = local.region_vars.locals.eks_clus
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env-region = "${local.env}-${local.region}"
-  tf-mod-tag = 
   // public_domain = local.environment_vars.locals.public_domain
 
   tags = {
