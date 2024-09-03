@@ -25,11 +25,7 @@ terraform {
 }
 
 
-locals {
-  tags = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.1.4--eks-iam"}
-  )
-}
+
 
 dependency "eks" {
   config_path = "../eks"
@@ -44,6 +40,8 @@ dependency "eks" {
 inputs = {
   cluster_name  = dependency.eks.outputs.cluster_name
   oidc_provider = dependency.eks.outputs.oidc_provider
-  tags          = locals.tags
+  tags          = merge(include.envcommon.locals.tags, 
+    {"tf-module-tag" = "v0.1.4--eks-iam"}
+  )
   // public_domain = include.envcommon.locals.public_domain
 }
