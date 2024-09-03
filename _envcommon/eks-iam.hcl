@@ -11,6 +11,7 @@ locals {
 
   # Automatically load region-level variables
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  
 
   # Extract out common variables for reuse
   env        = local.environment_vars.locals.environment
@@ -19,12 +20,15 @@ locals {
   eks_clus   = local.region_vars.locals.eks_clus
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env-region = "${local.env}-${local.region}"
+  tf-mod-tag = 
   // public_domain = local.environment_vars.locals.public_domain
 
   tags = {
-    Clustername = "${local.eks_fname}"
-    // GithubRepo  = "central-infrastructure"
-    // GithubOrg   = "pnjlavtech"
+    Clustername      = "${local.eks_fname}"
+    env              = "${local.env}"
+    region           = "${local.region}"
+    github-repo--ghr = "tf-aws-modules"
+    ghr-tf-module    = "eks-iam"
   }
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. This will

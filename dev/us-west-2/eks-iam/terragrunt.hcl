@@ -24,6 +24,13 @@ terraform {
   source = "${include.envcommon.locals.base_source_url}?ref=v0.1.4--eks-iam"
 }
 
+
+locals {
+  tags = merge(include.envcommon.locals.tags, 
+    {"tf-module-tag" = "v0.1.4--eks-iam"}
+  )
+}
+
 dependency "eks" {
   config_path = "../eks"
   mock_outputs = {
@@ -37,5 +44,6 @@ dependency "eks" {
 inputs = {
   cluster_name  = dependency.eks.outputs.cluster_name
   oidc_provider = dependency.eks.outputs.oidc_provider
+  tags          = locals.tags
   // public_domain = include.envcommon.locals.public_domain
 }
