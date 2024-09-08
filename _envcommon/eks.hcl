@@ -19,7 +19,7 @@ locals {
   eks_name      = local.environment_vars.locals.eks_name
   eks_clus      = local.region_vars.locals.eks_clus
   eks_fname     = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
-  public_domain = local.environment_vars.public_domain
+  public_domain = local.environment_vars.locals.public_domain
   vpc_cidr      = local.cidr
 
   tags = {
