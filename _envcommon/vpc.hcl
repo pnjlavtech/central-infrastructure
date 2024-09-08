@@ -19,9 +19,18 @@ locals {
   eks_name   = local.environment_vars.locals.eks_name
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env        = local.environment_vars.locals.environment
-  env-region = "${local.env}-${local.region}"
   // gh_token   = get_env("GH_PAT")
   vpc_cidr   = local.cidr
+
+  tags = {
+    created-date     = timestamp()
+    created-by       = "jay"
+    clustername      = "${local.eks_fname}"
+    env              = "${local.env}"
+    region           = "${local.region}"
+    github-repo--ghr = "tf-aws-modules"
+    ghr-tf-module    = "vpc"
+  }
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. 
   # This will be used to construct the source URL in the child terragrunt configurations.

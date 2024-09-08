@@ -3,7 +3,7 @@
 locals {
   cidr          = "10.230.0.0/16"
   environment   = "dev"
-  eks_name      = "${local.environment}-eks" # "dev-eks-a-us-west-2"
+  eks_name      = "${local.environment}-eks" 
   public_domain = "pnjlavtech.com"
 }
 

@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., qa -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.20--karpenter"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.1.21--karpenter"
 }
 
 dependency "eks" {
@@ -40,4 +40,7 @@ inputs = {
   cluster_endpoint                   = dependency.eks.outputs.cluster_endpoint
   cluster_name                       = dependency.eks.outputs.cluster_name
   chart_version                      = "0.37.0"
+  tags                               = merge(include.envcommon.locals.tags, 
+    {"tf-module-tag" = "v0.1.21--karpenter"}
+  )
 }

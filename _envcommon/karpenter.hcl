@@ -13,13 +13,20 @@ locals {
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   # Extract out common variables for reuse
-  // env = local.environment_vars.locals.environment
+  env        = local.environment_vars.locals.environment
+  region     = local.region_vars.locals.region
+  eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
 
-  # Extract the variables we need for easy access
-  // aws_region = local.region_vars.locals.aws_region
-  // eks_name   = local.environment_vars.locals.eks_name
-  // eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
-  // env-region = "${local.env}-${local.aws_region}"
+  tags = {
+    created-date     = timestamp()
+    created-by       = "jay"
+    clustername      = "${local.eks_fname}"
+    env              = "${local.env}"
+    region           = "${local.region}"
+    github-repo--ghr = "tf-aws-modules"
+    ghr-tf-module    = "karpenter"
+  }
+
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. This will
   # be used to construct the source URL in the child terragrunt configurations.

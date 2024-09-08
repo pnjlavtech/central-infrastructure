@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # COMMON TERRAGRUNT CONFIGURATION
-# This is the common component configuration for eks with karpenter. The common variables for each environment to
-# deploy eks with karpenter are defined here. This configuration will be merged into the environment configuration
+# This is the common component configuration for eks. The common variables for each environment to
+# deploy eks are defined here. This configuration will be merged into the environment configuration
 # via an include block.
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -19,13 +19,16 @@ locals {
   eks_name   = local.environment_vars.locals.eks_name
   eks_clus   = local.region_vars.locals.eks_clus
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
-  env-region = "${local.env}-${local.region}"
   vpc_cidr   = local.cidr
 
   tags = {
-    Clustername = "${local.eks_fname}"
-    // GithubRepo  = "central-infrastructure"
-    // GithubOrg   = "pnjlavtech"
+    created-date     = timestamp()
+    created-by       = "jay"
+    clustername      = "${local.eks_fname}"
+    env              = "${local.env}"
+    region           = "${local.region}"
+    github-repo--ghr = "tf-aws-modules"
+    ghr-tf-module    = "eks"
   }
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. This will
