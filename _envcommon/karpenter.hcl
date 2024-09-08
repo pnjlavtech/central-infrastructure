@@ -15,6 +15,8 @@ locals {
   # Extract out common variables for reuse
   env        = local.environment_vars.locals.environment
   region     = local.region_vars.locals.region
+  eks_name   = local.environment_vars.locals.eks_name
+  eks_clus   = local.region_vars.locals.eks_clus
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
 
   tags = {
