@@ -20,7 +20,7 @@ locals {
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
 
   tags = {
-    created-date     = timestamp()
+    created-date     = "2024-09-08"
     created-by       = "jay"
     clustername      = "${local.eks_fname}"
     env              = "${local.env}"
