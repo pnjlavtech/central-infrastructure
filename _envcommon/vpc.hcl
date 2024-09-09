@@ -13,23 +13,23 @@ locals {
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   # Extract the variables we need for easy access
-  region     = local.region_vars.locals.region
   cidr       = local.environment_vars.locals.cidr
   eks_clus   = local.region_vars.locals.eks_clus
   eks_name   = local.environment_vars.locals.eks_name
   eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
   env        = local.environment_vars.locals.environment
+  region     = local.region_vars.locals.region
   // gh_token   = get_env("GH_PAT")
   vpc_cidr   = local.cidr
 
   tags = {
     created-date     = "2024-09-08"
     created-by       = "jay"
-    clustername      = "${local.eks_fname}"
-    env              = "${local.env}"
-    region           = "${local.region}"
-    github-repo--ghr = "tf-aws-modules"
-    ghr-tf-module    = "vpc"
+    clustername      = local.eks_fname
+    env              = local.env
+    region           = local.region
+    github-repo      = "tf-aws-modules"
+    tf-module        = "vpc"
   }
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. 
@@ -71,7 +71,7 @@ locals {
 inputs = {
   cidr                                            = local.cidr
   intra_subnets                                   = local.intra_subnets
-  name                                            = local.env
+  name                                            = "${local.env}-${local.region}-vpc"
   private_subnets                                 = local.private_subnets
   public_subnets                                  = local.public_subnets
   intra_subnet_tags = {
