@@ -40,6 +40,7 @@ inputs = {
   cluster_endpoint                   = dependency.eks.outputs.cluster_endpoint
   cluster_name                       = dependency.eks.outputs.cluster_name
   chart_version                      = "0.37.0"
+  // chart_version                      = "1.0.0"
   tags                               = merge(include.envcommon.locals.tags, 
     {"tf-module-tag" = "v0.1.21--karpenter"}
   )
