@@ -34,7 +34,7 @@ inputs:
     required: true
   working_dir:
     description: "working dir"
-    default: "./dev/us-west-2"
+    default: "./dev/us-west-2/vpc"
     required: true
   
 runs:
