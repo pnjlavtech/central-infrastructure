@@ -23,7 +23,7 @@ locals {
   vpc_cidr   = local.cidr
 
   tags = {
-    created-date     = "2024-09-08"
+    created-date     = "2024-09-22"
     created-by       = "jay"
     clustername      = local.eks_fname
     env              = local.env
@@ -71,7 +71,7 @@ locals {
 inputs = {
   cidr                                            = local.cidr
   intra_subnets                                   = local.intra_subnets
-  name                                            = "${local.env}-${local.region}-vpc"
+  name                                            = "${local.env}-vpc"
   private_subnets                                 = local.private_subnets
   public_subnets                                  = local.public_subnets
   intra_subnet_tags = {
