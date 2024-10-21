@@ -61,26 +61,26 @@ runs:
         path: ${{ inputs.tf_plugin_cache_dir }}
         key: ${{ runner.os }}-terraform-plugin-cache-${{ hashFiles('**/.terraform.lock.hcl') }}
 
-    - name: Setup TFLint
-      uses: terraform-linters/setup-tflint@v4
-      with:
-        tflint_version: v0.50.3
+    # - name: Setup TFLint
+    #   uses: terraform-linters/setup-tflint@v4
+    #   with:
+    #     tflint_version: v0.50.3
 
-    - name: Show version
-      run: tflint --version
-      shell: bash
+    # - name: Show version
+    #   run: tflint --version
+    #   shell: bash
 
-    - name: Init TFLint
-      run: tflint --init
-      shell: bash
-      env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ env.gh_pat }}
+    # - name: Init TFLint
+    #   run: tflint --init
+    #   shell: bash
+    #   env:
+    #     # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+    #     GITHUB_TOKEN: ${{ env.gh_pat }}
 
 
-    - name: Run TFLint
-      run: tflint -f json 
-      shell: bash
+    # - name: Run TFLint
+    #   run: tflint -f json 
+    #   shell: bash
 
 
     - name: Setup Terraform 
@@ -97,33 +97,33 @@ runs:
       run: which terraform
       shell: bash
 
-    # - name: Terragrunt Destroy ${{ inputs.environment_name }}
-    #   uses: gruntwork-io/terragrunt-action@v2
-    #   with:
-    #     tf_version: ${{ inputs.tf_version }}
-    #     tg_version: ${{ inputs.tg_version }}
-    #     tg_dir: ${{ inputs.working_dir }}
-    #     tg_command: 'run-all destroy'
-
-
-
-    - name: Terragrunt Plan ${{ inputs.environment_name }}
+    - name: Terragrunt Destroy ${{ inputs.environment_name }}
       uses: gruntwork-io/terragrunt-action@v2
       with:
         tf_version: ${{ inputs.tf_version }}
         tg_version: ${{ inputs.tg_version }}
         tg_dir: ${{ inputs.working_dir }}
-        # tg_command: 'run-all plan --terragrunt-log-level debug'
-        tg_command: 'run-all plan'
+        tg_command: 'run-all destroy'
 
 
 
-    - name: Checkov GitHub Action
-      uses: bridgecrewio/checkov-action@v12
-      with:
-        # This will add both a CLI output to the console and create a results.sarif file
-        output_format: cli,sarif
-        output_file_path: console,results.sarif
+    # - name: Terragrunt Plan ${{ inputs.environment_name }}
+    #   uses: gruntwork-io/terragrunt-action@v2
+    #   with:
+    #     tf_version: ${{ inputs.tf_version }}
+    #     tg_version: ${{ inputs.tg_version }}
+    #     tg_dir: ${{ inputs.working_dir }}
+    #     # tg_command: 'run-all plan --terragrunt-log-level debug'
+    #     tg_command: 'run-all plan'
+
+
+
+    # - name: Checkov GitHub Action
+    #   uses: bridgecrewio/checkov-action@v12
+    #   with:
+    #     # This will add both a CLI output to the console and create a results.sarif file
+    #     output_format: cli,sarif
+    #     output_file_path: console,results.sarif
       
     # - name: Upload SARIF file
     #   uses: github/codeql-action/upload-sarif@v3     
