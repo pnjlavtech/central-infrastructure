@@ -16,13 +16,21 @@ locals {
   cidr          = local.environment_vars.locals.cidr
   eks_clus      = local.region_vars.locals.eks_clus
   eks_name      = local.environment_vars.locals.eks_name
+
+  # new schema
+  // eks_cluster      = local.region_vars.locals.eks_cluster_a
+  // or
+  // eks_cluster      = local.region_vars.locals.eks_cluster_b
   env           = local.environment_vars.locals.environment
   public_domain = local.environment_vars.locals.public_domain
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
-  # names from items above
+  ## names from items above
+  # current schema
   eks_fname     = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
-  alb_name      = "${local.eks_name}-${local.eks_clus}-${local.region}-alb"
+  # new schema
+  // eks_fname = "${local.env}-${local.region}-${local.eks_cluster}"  # "dev-us-west-2-eks-a" or "dev-us-west-2-eks-b"
+  alb_name      = "${local.env}-${local.region}-alb"                  # "dev-us-west-2-alb"
 
   tags = {
     created-date = "2024-10-20"

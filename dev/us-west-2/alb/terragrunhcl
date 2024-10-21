@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., dev -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.3--alb"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.4--alb"
 }
 
 
@@ -38,12 +38,12 @@ dependency "vpc" {
   }
 }
 
-dependency "eks" {
-  config_path = "../eks"
-  mock_outputs = {
-    karpenter_node_group = "dev-eks-a-us-west-2:karpenter-20241020202325788000000011"
-  }
-}
+// dependency "eks" {
+//   config_path = "../eks"
+//   mock_outputs = {
+//     karpenter_node_group = "dev-eks-a-us-west-2:karpenter-20241020202325788000000011"
+//   }
+// }
 
 
 dependency "acm" {
@@ -55,13 +55,15 @@ dependency "acm" {
 
 
 inputs = {
+  env                  = local.environment_vars.locals.environment
+  region               = local.region_vars.locals.region
   vpc_cidr_block       = dependency.vpc.outputs.vpc_cidr_block
   vpc_id               = dependency.vpc.outputs.vpc_id
   public_subnets       = dependency.vpc.outputs.public_subnets
-  karpenter_node_group = dependency.eks.outputs.eks_managed_node_groups["karpenter"].node_group_autoscaling_group_names[0]
+  // karpenter_node_group = dependency.eks.outputs.eks_managed_node_groups["karpenter"].node_group_autoscaling_group_names[0]
   // karpenter_node_group = eks_managed_node_groups_autoscaling_group_names[0]
   acm_certificate_arn  = dependency.acm.outputs.acm_certificate_arn
   tags                = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.0.3--alb"}
+    {"tf-module-tag" = "v0.0.4--alb"}
   )
 }
