@@ -21,15 +21,15 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., dev -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.1--alb"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.2--alb"
 }
 
 
 dependency "vpc" {
   config_path = "../vpc"
   mock_outputs = {
-    vpc_cidr     = "10.230.0.0/16"
-    vpc_id       = "vpc-08f7169617628dd22"
+    vpc_cidr_block = "10.230.0.0/16"
+    vpc_id         = "vpc-08f7169617628dd22"
     public_subnets = [
              "subnet-0048819e19ca630b5", 
              "subnet-0d40e9b3d7602d3bb", 
@@ -55,13 +55,13 @@ dependency "acm" {
 
 
 inputs = {
-  vpc_cidr             = dependency.vpc.outputs.vpc.cidr
+  vpc_cidr_block       = dependency.vpc.outputs.vpc_cidr_block
   vpc_id               = dependency.vpc.outputs.vpc_id
   public_subnets       = dependency.vpc.outputs.public_subnets
   karpenter_node_group = dependency.eks.outputs.eks_managed_node_group["karpenter"].node_group_autoscaling_group_names[0]
   // karpenter_node_group = eks_managed_node_groups_autoscaling_group_names[0]
   acm_certificate_arn  = dependency.acm.outputs.acm_certificate_arn
   tags                = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.0.1--alb"}
+    {"tf-module-tag" = "v0.0.2--alb"}
   )
 }
