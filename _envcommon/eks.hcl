@@ -16,14 +16,14 @@ locals {
   cidr          = local.environment_vars.locals.cidr
   eks_clus      = local.region_vars.locals.eks_clus
   eks_name      = local.environment_vars.locals.eks_name
-  eks_fname     = "${local.eks_name}-${local.eks_clus}-${local.region}" # "dev-eks-a-us-west-2"
+  eks_fname     = "${local.env}-${local.region}-${local.eks_name}-${local.eks_clus}" # "dev-us-west-2-eks-blue"
   env           = local.environment_vars.locals.environment
   public_domain = local.environment_vars.locals.public_domain
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
 
   tags = {
-    created-date     = "2024-09-08"
+    created-date     = "2024-11-02"
     created-by       = "jay"
     clustername      = local.eks_fname
     env              = local.env
