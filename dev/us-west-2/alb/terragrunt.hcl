@@ -38,18 +38,18 @@ dependency "vpc" {
   }
 }
 
-// dependency "eks" {
-//   config_path = "../eks"
-//   mock_outputs = {
-//     karpenter_node_group = "dev-eks-a-us-west-2:karpenter-20241020202325788000000011"
-//   }
-// }
+dependency "eks" {
+  config_path = "../eks"
+  mock_outputs = {
+    karpenter_node_group = "dev-eks-a-us-west-2:karpenter-20241020202325788000000011"
+  }
+}
 
 
 dependency "acm" {
   config_path = "../acm"
   mock_outputs = {
-    acm_certificate_arn = "arn:aws:acm:us-west-2:***:certificate/0761d356-0614-4218-8ef2-5924efc25a94"
+    acm_certificate_arn = "arn:aws:acm:us-west-2:123456712345:certificate/0761d356-0614-4218-8ef2-5924efc25a94"
   }
 }
 
@@ -60,7 +60,7 @@ inputs = {
   vpc_cidr_block       = dependency.vpc.outputs.vpc_cidr_block
   vpc_id               = dependency.vpc.outputs.vpc_id
   public_subnets       = dependency.vpc.outputs.public_subnets
-  // karpenter_node_group = dependency.eks.outputs.eks_managed_node_groups["karpenter"].node_group_autoscaling_group_names[0]
+  karpenter_node_group = dependency.eks.outputs.eks_managed_node_groups["karpenter"].node_group_autoscaling_group_names[0]
   // karpenter_node_group = eks_managed_node_groups_autoscaling_group_names[0]
   acm_certificate_arn  = dependency.acm.outputs.acm_certificate_arn
   tags                = merge(include.envcommon.locals.tags, 
