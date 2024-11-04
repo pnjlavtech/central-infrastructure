@@ -55,8 +55,8 @@ dependency "acm" {
 
 
 inputs = {
-  env                  = local.environment_vars.locals.environment
-  region               = local.region_vars.locals.region
+  # env                  = include.envcommon.locals.env
+  # region               = include.envcommon.locals.region
   vpc_cidr_block       = dependency.vpc.outputs.vpc_cidr_block
   vpc_id               = dependency.vpc.outputs.vpc_id
   public_subnets       = dependency.vpc.outputs.public_subnets
