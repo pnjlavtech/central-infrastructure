@@ -18,7 +18,7 @@ locals {
   alb_sg_name      = "${local.env}-${local.region}-alb-sg" # "dev-us-west-2-alb-sg"
 
   tags = {
-    created-date = "2024-11-02"
+    created-date = "2024-12-26"
     created-by   = "jay"
     sg-name     = local.alb_sg_name
     env          = local.env
