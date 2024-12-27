@@ -21,12 +21,12 @@ locals {
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
   eks_fname     = "${local.env}-${local.region}-${local.eks_name}-${local.eks_clus}" # "dev-us-west-2-eks-blue"
-  alb_name      = "${local.env}-${local.region}-alb"                  # "dev-us-west-2-alb"
+  alb_pre_name  = "${local.env}-${local.region}-"                  # "dev-us-west-2-"
 
   tags = {
     created-date = "2024-11-02"
     created-by   = "jay"
-    alb-name     = local.alb_name
+    # alb-name     = local.alb_name
     env          = local.env
     region       = local.region
     github-repo  = "tf-aws-modules"
