@@ -23,19 +23,21 @@ locals {
   eks_fname     = "${local.env}-${local.region}-${local.eks_name}-${local.eks_clus}" # "dev-us-west-2-eks-blue"
   alb_pre_name  = "${local.env}-${local.region}-"                  # "dev-us-west-2-"
 
+  domain_name_argo = local.environment_vars.locals.public_domain
+
   tags = {
-    created-date = "2024-11-02"
+    created-date = "2025-01-25"
     created-by   = "jay"
     # alb-name     = local.alb_name
     env          = local.env
     region       = local.region
     github-repo  = "tf-aws-modules"
-    tf-module    = "alb"
+    tf-module    = "eks-alb"
   }
 
   # Expose the base source URL so different versions of the module can be deployed in different environments. This will
   # be used to construct the source URL in the child terragrunt configurations.
-  base_source_url = "git::https://github.com/pnjlavtech/tf-aws-modules.git//alb"
+  base_source_url = "git::https://github.com/pnjlavtech/tf-aws-modules.git//eks-alb"
 }
 
 
