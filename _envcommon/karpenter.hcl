@@ -20,7 +20,7 @@ locals {
   region     = local.region_vars.locals.region
 
   tags = {
-    created-date     = "2024-11-02"
+    created-date     = "2025-01-26"
     created-by       = "jay"
     clustername      = local.eks_fname
     env              = local.env
