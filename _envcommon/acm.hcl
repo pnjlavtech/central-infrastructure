@@ -23,7 +23,7 @@ locals {
   vpc_cidr      = local.cidr
 
   tags = {
-    created-date     = "2025-01-26"
+    created-date     = "2025-02-02"
     created-by       = "jay"
     env              = local.env
     region           = local.region
