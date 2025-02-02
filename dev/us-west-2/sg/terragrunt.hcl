@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., dev -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.3--sg"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.4--sg"
 }
 
 
@@ -36,6 +36,6 @@ dependency "vpc" {
 inputs = {
   vpc_id               = dependency.vpc.outputs.vpc_id
   tags                = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.0.3--sg"}
+    {"tf-module-tag" = "v0.0.4--sg"}
   )
 }
