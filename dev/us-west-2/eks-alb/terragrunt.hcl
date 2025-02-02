@@ -21,7 +21,7 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., dev -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.9--eks-alb"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.10--eks-alb"
 }
 
 
@@ -60,6 +60,6 @@ inputs = {
   acm_certificate_arn = dependency.acm.outputs.acm_certificate_arn
   domain_name_argo    = include.envcommon.locals.domain_name_argo
   tags                = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.0.9--eks-alb"}
+    {"tf-module-tag" = "v0.0.10--eks-alb"}
   )
 }
