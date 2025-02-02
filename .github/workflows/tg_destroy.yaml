@@ -1,0 +1,36 @@
+name: 'Terragrunt Destroy'
+on:
+  push:
+    branches:
+      - "destroy"
+
+
+permissions: read-all
+
+env:
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  tg_version: '0.53.2'
+  tf_version: '1.5.7'
+  working_dir: './non-prod/us-west-2/qa/vpc'
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    environment: 'non-prod'
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@main
+
+      - name: Destroy
+        uses: gruntwork-io/terragrunt-action@v2
+        env:
+          AWS_ACCOUNT_ID: ${{ env.AWS_ACCOUNT_ID }} 
+        with:
+          tf_version: ${{ env.tf_version }}
+          tg_version: ${{ env.tg_version }}
+          tg_dir: ${{ env.working_dir }}
+          tg_command: 'destroy'
+
+
