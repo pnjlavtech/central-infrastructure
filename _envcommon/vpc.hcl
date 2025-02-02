@@ -14,9 +14,9 @@ locals {
 
   # Extract the variables we need for easy access
   cidr       = local.environment_vars.locals.cidr
-  eks_clus   = local.region_vars.locals.eks_clus  # blue
+  eks_clus   = local.region_vars.locals.eks_clus  # blue or green
   eks_name   = local.environment_vars.locals.eks_name  # eks 
-  eks_fname  = "${local.env}-${local.region}-${local.eks_name}-${local.eks_clus}" # "dev-us-west-2-eks-blue"
+  eks_fname  = "${local.eks_name}-${local.eks_clus}-${local.region}-${local.env}" # "eks-blue-us-west-2-dev"
   env        = local.environment_vars.locals.environment # dev 
   region     = local.region_vars.locals.region # us-west-2
   // gh_token   = get_env("GH_PAT")

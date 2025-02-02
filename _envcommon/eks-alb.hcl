@@ -20,13 +20,13 @@ locals {
   public_domain = local.environment_vars.locals.public_domain
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
-  eks_fname     = "${local.env}-${local.region}-${local.eks_name}-${local.eks_clus}" # "dev-us-west-2-eks-blue"
-  alb_pre_name  = "${local.env}-${local.region}-"                  # "dev-us-west-2-"
+  eks_fname     = "${local.eks_name}-${local.eks_clus}-${local.region}-${local.env}" # "eks-blue-us-west-2-dev"
 
-  domain_name_argo = local.environment_vars.locals.public_domain
+  # alb_pre_name     = "${local.env}-${local.region}-"  # "dev-us-west-2-"
+  domain_name_argo = "argocd.${local.eks_name}.${local.region}.${local.env}.${local.public_domain}" # "argocd.eks.us-west-2.dev.domain.com"
 
   tags = {
-    created-date = "2025-01-25"
+    created-date = "2025-02-02"
     created-by   = "jay"
     # alb-name     = local.alb_name
     env          = local.env

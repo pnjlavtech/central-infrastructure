@@ -15,7 +15,7 @@ locals {
   # Extract out common variables for reuse
   env           = local.environment_vars.locals.environment
   region        = local.region_vars.locals.region
-  alb_sg_name      = "${local.env}-${local.region}-alb-sg" # "dev-us-west-2-alb-sg"
+  alb_sg_name   = "${local.env}-${local.region}-alb-sg" # "dev-us-west-2-alb-sg"
 
   tags = {
     created-date = "2025-02-02"
