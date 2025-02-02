@@ -27,7 +27,7 @@ terraform {
 
 inputs = {
   public_domain    = include.envcommon.locals.public_domain
-  domain_name_argo = "argocd.${local.eks_name}.${local.region}.${local.env}.${local.public_domain}" # "argocd.eks.us-west-2.dev.domain.com"
+  domain_name_argo = include.envcommon.locals.domain_name_argo
   tags             = merge(include.envcommon.locals.tags, 
     {"tf-module-tag" = "v0.0.5--acm"}
   )

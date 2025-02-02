@@ -21,6 +21,8 @@ locals {
   public_domain = local.environment_vars.locals.public_domain
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
+  
+  domain_name_argo = "argocd.${local.eks_name}.${local.region}.${local.env}.${local.public_domain}" # "argocd.eks.us-west-2.dev.domain.com"
 
   tags = {
     created-date     = "2025-02-02"

@@ -28,14 +28,14 @@ terraform {
 dependency "vpc" {
   config_path = "../vpc"
   mock_outputs = {
-    vpc_id         = "vpc-08f7169617628dd22"
+    vpc_id = "vpc-08f7169617628dd22"
   }
 }
 
 
 inputs = {
-  vpc_id               = dependency.vpc.outputs.vpc_id
-  tags                = merge(include.envcommon.locals.tags, 
+  vpc_id = dependency.vpc.outputs.vpc_id
+  tags   = merge(include.envcommon.locals.tags, 
     {"tf-module-tag" = "v0.0.4--sg"}
   )
 }
