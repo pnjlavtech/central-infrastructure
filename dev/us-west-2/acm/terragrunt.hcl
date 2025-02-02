@@ -21,13 +21,14 @@ include "envcommon" {
 # Configure the version of the module to use in this environment. This allows you to promote new versions one
 # environment at a time (e.g., qa -> stage -> prod).
 terraform {
-  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.3--acm"
+  source = "${include.envcommon.locals.base_source_url}?ref=v0.0.5--acm"
 }
 
 
 inputs = {
-  public_domain = include.envcommon.locals.public_domain
-  tags          = merge(include.envcommon.locals.tags, 
-    {"tf-module-tag" = "v0.0.3--acm"}
+  public_domain    = include.envcommon.locals.public_domain
+  domain_name_argo = "argocd.${local.eks_name}.${local.region}.${local.env}.${local.public_domain}" # "argocd.eks.us-west-2.dev.domain.com"
+  tags             = merge(include.envcommon.locals.tags, 
+    {"tf-module-tag" = "v0.0.5--acm"}
   )
 }
