@@ -34,7 +34,7 @@ inputs:
     required: true
   working_dir:
     description: "working dir"
-    default: "./dev/us-west-2/eks"
+    default: "./dev/us-west-2/acm"
     required: true
   
 runs:
