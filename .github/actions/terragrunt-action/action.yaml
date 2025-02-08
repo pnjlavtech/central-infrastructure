@@ -34,7 +34,7 @@ inputs:
     required: true
   working_dir:
     description: "working dir"
-    default: "./dev/us-west-2/karpenter"
+    default: "./dev/us-west-2/eks-alb"
     required: true
   
 runs:
