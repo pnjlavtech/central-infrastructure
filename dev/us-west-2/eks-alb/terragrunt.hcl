@@ -47,7 +47,11 @@ dependency "vpc" {
 dependency "acm" {
   config_path = "../acm"
   mock_outputs = {
-    argo_cert_arn = "arn:aws:acm:us-west-2:123456712345:certificate/0761d356-0614-4218-8ef2-5924efc25a94"
+    # argo_cert_arn = "arn:aws:acm:us-west-2:123456712345:certificate/0761d356-0614-4218-8ef2-5924efc25a94"
+  certificates_arn = {
+    "argocd" = "arn:aws:acm:us-west-2:***:certificate/f358f480-2bfe-4691-beb2-44adf6a0058c"
+    "eks" = "arn:aws:acm:us-west-2:***:certificate/85455121-7daa-49e8-9643-cee630bcbb1e"
+    }
   }
 }
 
@@ -58,7 +62,7 @@ inputs = {
   private_subnets      = dependency.vpc.outputs.private_subnets
   public_subnets       = dependency.vpc.outputs.public_subnets
   public_domain_name   = include.envcommon.locals.public_domain
-  argo_cert_arn        = dependency.acm.outputs.argo_cert_arn
+  argo_cert_arn        = dependency.acm.outputs.certificates_arn.argocd
   domain_name_argo     = include.envcommon.locals.domain_name_argo
   tags                 = merge(include.envcommon.locals.tags, 
     {"tf-module-tag" = "v0.0.16--eks-alb"}
