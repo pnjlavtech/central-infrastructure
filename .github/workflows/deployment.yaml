@@ -13,7 +13,7 @@ env:
   TG_VERSION: 0.59.7
   TG_VER: '0.59.7'
   TF_VERSION: 1.9.2 
-  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform.d/plugin-cache
+  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform.d/plugin-cache-new
   working_dir: './dev/us-west-2' 
 
 

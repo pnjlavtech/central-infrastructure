@@ -30,7 +30,7 @@ inputs:
     required: true
   tf_plugin_cache_dir:
     description: "tf_plugin_cache_dir"
-    default: "${{ github.workspace }}/.terraform.d/plugin-cache"
+    default: "${{ github.workspace }}/.terraform.d/plugin-cache-new"
     required: true
   working_dir:
     description: "working dir"
