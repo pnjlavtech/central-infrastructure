@@ -23,7 +23,7 @@ locals {
   vpc_cidr      = local.cidr
 
   tags = {
-    created-date     = "2025-02-02"
+    created-date     = "2025-02-09"
     created-by       = "jay"
     clustername      = local.eks_fname
     env              = local.env

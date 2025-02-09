@@ -25,7 +25,7 @@ locals {
   domain_name_argo = "argocd.${local.eks_name}.${local.region}.${local.env}.${local.public_domain}" # "argocd.eks.us-west-2.dev.domain.com"
 
   tags = {
-    created-date     = "2025-02-02"
+    created-date     = "2025-02-09"
     created-by       = "jay"
     env              = local.env
     region           = local.region
