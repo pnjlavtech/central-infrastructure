@@ -20,7 +20,7 @@ locals {
   tags = {
     created-date = "2025-02-09"
     created-by   = "jay"
-    sg-name     = local.alb_sg_name
+    sg-name      = local.alb_sg_name
     env          = local.env
     region       = local.region
     github-repo  = "tf-aws-modules"

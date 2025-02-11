@@ -18,7 +18,7 @@ locals {
   eks_name      = local.environment_vars.locals.eks_name # eks
   eks_fname     = "${local.eks_name}-${local.eks_clus}-${local.region}-${local.env}" # "eks-blue-us-west-2-dev"
   env           = local.environment_vars.locals.environment # dev
-  public_domain = local.environment_vars.locals.public_domain # us-west-2
+  public_domain = local.environment_vars.locals.public_domain # pnjlavtech.com
   region        = local.region_vars.locals.region
   vpc_cidr      = local.cidr
 

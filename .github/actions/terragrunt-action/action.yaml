@@ -18,11 +18,11 @@ inputs:
     required: true
   tg_ver:
     description: "tg ver"
-    default: "0.59.7"
+    default: "0.73.0"
     required: true
   tg_version:
     description: "tg version"
-    default: 0.59.7
+    default: 0.73.0
     required: true
   tf_version:
     description: "tf version"
@@ -30,11 +30,11 @@ inputs:
     required: true
   tf_plugin_cache_dir:
     description: "tf_plugin_cache_dir"
-    default: "${{ github.workspace }}/.terraform.d/plugin-cache"
+    default: "${{ github.workspace }}/.terraform.d/plugin-cache-new"
     required: true
   working_dir:
     description: "working dir"
-    default: "./dev/us-west-2/vpc"
+    default: "./dev/us-west-2"
     required: true
   
 runs:
@@ -42,79 +42,79 @@ runs:
   steps:
     - name: Checkout repo
       uses: actions/checkout@main
-          
+           
     # - name: GitHub OIDC Auth to assume AWS Role
     #   uses: aws-actions/configure-aws-credentials@master
     #   with:
     #     role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
     #     aws-region: us-west-2
 
-    # - name: Create Terraform Plugin Cache Dir
-    #   run: mkdir -p $TF_PLUGIN_CACHE_DIR 
-    #   shell: bash
-    #   env:
-    #     TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
+    - name: Create Terraform Plugin Cache Dir
+      run: mkdir -p $TF_PLUGIN_CACHE_DIR 
+      shell: bash
+      env:
+        TF_PLUGIN_CACHE_DIR: ${{ inputs.tf_plugin_cache_dir }}
 
-    # - name: Terraform Plugin Cache
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: ${{ inputs.tf_plugin_cache_dir }}
-    #     key: ${{ runner.os }}-terraform-plugin-cache-${{ hashFiles('**/.terraform.lock.hcl') }}
-
-    # - name: Setup TFLint
-    #   uses: terraform-linters/setup-tflint@v4
-    #   with:
-    #     tflint_version: v0.50.3
-
-    # - name: Show version
-    #   run: tflint --version
-    #   shell: bash
-
-    # - name: Init TFLint
-    #   run: tflint --init
-    #   shell: bash
-    #   env:
-    #     # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-    #     GITHUB_TOKEN: ${{ env.gh_pat }}
-
-
-    # - name: Run TFLint
-    #   run: tflint -f json 
-    #   shell: bash
-
-
-    # - name: Setup Terraform 
-    #   uses: hashicorp/setup-Terraform@v3
-    #   with:
-    #     # terraform_version: ${{ env.tf_version }}
-    #     terraform_wrapper: true
-
-    # - name: Setup Terraform version
-    #   run: terraform --version
-    #   shell: bash
-
-    # - name: Setup Terraform wrapper path
-    #   run: which terraform
-    #   shell: bash
-
-    - name: Terragrunt Destroy ${{ inputs.environment_name }}
-      uses: gruntwork-io/terragrunt-action@v2
+    - name: Terraform Plugin Cache
+      uses: actions/cache@v4
       with:
-        tf_version: ${{ inputs.tf_version }}
-        tg_version: ${{ inputs.tg_version }}
-        tg_dir: ${{ inputs.working_dir }}
-        tg_command: 'run-all destroy'
+        path: ${{ inputs.tf_plugin_cache_dir }}
+        key: ${{ runner.os }}-terraform-plugin-cache-${{ hashFiles('**/.terraform.lock.hcl') }}
+
+    - name: Setup TFLint
+      uses: terraform-linters/setup-tflint@v4
+      with:
+        tflint_version: v0.50.3
+
+    - name: Show version
+      run: tflint --version
+      shell: bash
+
+    - name: Init TFLint
+      run: tflint --init
+      shell: bash
+      env:
+        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+        GITHUB_TOKEN: ${{ env.gh_pat }}
 
 
+    - name: Run TFLint
+      run: tflint -f json 
+      shell: bash
 
-    # - name: Terragrunt Plan ${{ inputs.environment_name }}
+
+    - name: Setup Terraform 
+      uses: hashicorp/setup-Terraform@v3
+      with:
+        # terraform_version: ${{ env.tf_version }}
+        terraform_wrapper: true
+
+    - name: Setup Terraform version
+      run: terraform --version
+      shell: bash
+
+    - name: Setup Terraform wrapper path
+      run: which terraform
+      shell: bash
+
+    # - name: Terragrunt Destroy ${{ inputs.environment_name }}
     #   uses: gruntwork-io/terragrunt-action@v2
     #   with:
     #     tf_version: ${{ inputs.tf_version }}
     #     tg_version: ${{ inputs.tg_version }}
     #     tg_dir: ${{ inputs.working_dir }}
-    #     # tg_command: 'run-all plan --terragrunt-log-level debug'
-    #     tg_command: 'run-all plan'
+    #     tg_command: 'run-all destroy'
+
+
+
+    - name: Terragrunt Plan ${{ inputs.environment_name }}
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ inputs.tf_version }}
+        tg_version: ${{ inputs.tg_version }}
+        tg_dir: ${{ inputs.working_dir }}
+        # tg_command: 'run-all plan --terragrunt-log-level debug'
+        tg_command: 'run-all plan'
 
 
 
